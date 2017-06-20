@@ -1,0 +1,16 @@
+<div id='actions'>
+  <% actions.each do |action| %>
+    <% if action[:display].eql? "DEFAULT" %>
+    <div class="action">
+    <button type='submit' 
+      formmethod='POST'
+      formaction="<%= action[:href] %>"
+      class='btn btn-primary btn-lg'
+      <%= display_if_not(action[:display]) %>
+      >
+      <%= action[:title] %>
+    </button>
+    </div>
+    <% end %>
+  <% end %>
+</div>

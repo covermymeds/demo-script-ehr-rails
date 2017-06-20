@@ -1,0 +1,7 @@
+<h1>Success</h1>
+<% if @pa.nil? %>
+<p>The request id <%= @callback['id'] %> was successfully deleted.</p>
+<% else %>
+<p>The request id <%= @callback['id'] %> was successfully updated.</p>
+<% end %>
+<p>Current status: <%= @callback['workflow_status'] %></p>

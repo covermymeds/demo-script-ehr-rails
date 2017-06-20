@@ -1,0 +1,17 @@
+<div class="col-md-3">
+  <span><label> <%= question[:question_text] %></label> </span>
+</div>
+<div class="col-md-9 <%= require_if(question[:flag]) %>">
+  <input type="hidden" name="<%= massage(question[:question_id], form_name) %>" value="0"/>
+
+  <input type="checkbox"
+  class="form-control"
+  id='<%= question[:question_id] %>'
+  name="<%= massage(question[:question_id], form_name) %>"
+  value="<%= question[:checked_value] %>"
+  data-next-question-id="<%= massage(question[:next_question_id], form_name)%>"
+  data-default-next-id="<%= massage(question[:default_next_question_id], form_name) %>"
+  <%= checked_if(data[question[:question_id].to_sym]) %>
+  <%= require_if(question[:flag]) %>
+  />
+</div>

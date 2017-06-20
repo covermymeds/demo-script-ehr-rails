@@ -1,0 +1,20 @@
+<div class="col-md-3">
+  <span> <label><%= question[:question_text] %></label> </span>
+</div>
+<div class="col-md-9 <%= require_if(question[:flag]) %> ">
+  <input type="text"
+  class="form-control datepicker <%= require_if(question[:flag]) %>"
+  id='<%= question[:question_id] %>'
+  name="<%= massage(question[:question_id], form_name) %>"
+  value="<%= data[question[:question_id].to_sym] %>"
+  <% question[:validations].each do |valid| %>
+    <%= render_validation(valid, @validations) %>
+  <% end %>
+  data-default-next-id="<%= massage(question[:default_next_question_id], form_name) %>"
+  <%= require_if(question[:flag]) %>
+  />
+  <span class="help-block"><%= question[:help_text] %></span>
+  <% question[:validations].each do |validation| %>
+    <span class="help-block"><%= @validations[validation][:message] %></span>
+  <% end %>
+</div>

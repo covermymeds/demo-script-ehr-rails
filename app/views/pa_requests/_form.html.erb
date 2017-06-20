@@ -1,0 +1,77 @@
+<h2><%= @patient.full_name %></h2>
+
+<div class='row'>
+  <div class='col-md-12'>
+    <table class='table table-responsive'>
+      <tr>
+        <th>Medication</th>
+        <th>Quantity</th>
+        <th>Frequency</th>
+        <th>Refills</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>
+          <p><%= link_to @prescription.drug_name, edit_patient_prescription_path(@patient, @prescription) %></p>
+        </td>
+        <td>
+          <p><%= @prescription.quantity %></p>
+        </td>
+        <td>
+          <p><%= @prescription.frequency %></p>
+        </td>
+        <td>
+          <p><%= @prescription.refills %></p>
+        </td>
+        <td>
+          <% if @prescription.dispense_as_written %>
+          <strong>Dispense as Written</strong>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-md-12'>
+    <%= form_for [@patient, @prescription, @pa_request] do |f| %>
+
+      <%= render 'shared/errors', object: f.object %>
+
+      <formset>
+        <%= hidden_field :prescription, :drug_number %>
+        <legend>Prior Authorization</legend>
+        <div class='form-group'>
+          <%= f.label :prescriber_id, "Prescriber" %><br/>
+          <%= f.collection_select :prescriber_id, User.doctors.all, :id, :display_name, {prompt: 'Select a Prescriber'}, class: 'form-control' %>
+        </div>
+
+        <div class='checkbox'>
+          <%= f.label :urgent do %>
+          <%= f.check_box :urgent, :class=>'checkbox' %>
+          <b><span class='large'>This request is urgent?</span></b>
+          <% end %>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :state, "State"%><br/>
+          <%= f.subregion_select :state, 'US', {priority: %w(@patient.state), prompt:'Choose state patient lives in'}, :class=>'form-control' %>
+        </div>
+
+        <div class='form-group'>
+          <%= label_tag :form_name, "Payer" %>
+          <input type='text' id='form_name' class='form-control' placeholder='Payer Name' data-payer></input>
+          <%= hidden_field :pa_request, :form_id %>
+        </div>
+      </formset>
+
+      <div class='form-actions'>
+        <%= link_to "Cancel", :back %>
+        <%= f.submit "Start PA", :class=>'btn btn-primary', :id=>'create'%>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

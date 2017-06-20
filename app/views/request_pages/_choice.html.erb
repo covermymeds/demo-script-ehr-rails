@@ -1,0 +1,50 @@
+<div class="col-md-3">
+<span> <label><%= question[:question_text] %></label> </span>
+</div>
+<div class="col-md-9 <%= require_if(question[:flag]) %>">
+<% if (question[:select_multiple])  %>
+  <% question[:choices].each do |option| %>
+    <div class="checkbox">
+      <input type="hidden" name="<%= massage(question[:question_id], form_name) %>" value="0"/>
+      <label>
+        <input type="hidden" name="<%= massage(question[:question_id], form_name) %>" value="0"/>
+        <input
+        name="<%= massage(question[:question_id], form_name) %>"
+        id='<%= question[:question_id] %>'
+        type="checkbox"
+        value="<%= option[:choice_id] %>"
+        data-default-next-id="<%= massage(question[:default_next_question_id], form_name) %>"
+        data-next-question-id="<%= massage(option[:next_question_id], form_name) if option[:next_question_id] %>"
+        <%= multiple_checked_if(option[:choice_id], data[question[:question_id].to_sym]) %>
+        />
+        <%= option[:choice_text] %>
+      </label>
+    </div>
+    <% end %>
+
+  <% else %>
+
+    <select
+    name="<%= massage(question[:question_id], form_name) %>"
+    class="form-control"
+    id='<%= question[:question_id] %>'
+    data-default-next-id="<%= massage(question[:default_next_question_id], form_name) %>"
+    <%= require_if(question[:flag]) %>
+    >
+    <% if data[question[:question_id]].nil? %>
+    <option disabled selected value> -- select an option -- </option>
+    <% end %>
+    <% question[:choices].each do |option| %>
+      <option class="option"
+      value="<%= option[:choice_id] %>"
+      data-next-question-id="<%= massage(option[:next_question_id], form_name) if option[:next_question_id] %>"
+      <%= selected_if(option[:choice_id], data[question[:question_id].to_sym]) %>
+      >
+      <%= option[:choice_text] %>
+      </option>
+      <% end %>
+  </select>
+
+  <% end %>
+</div>
+

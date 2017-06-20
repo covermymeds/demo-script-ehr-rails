@@ -1,0 +1,19 @@
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <h2>Let's pretend that this is your EHR...</h2>
+    <p>This is a simple demo system to show how to integrate CoverMyMeds into your system using the <a href='https://developers.covermymeds.com/ehr-api.html'>CoverMyMeds API</a>. In addition to the API, this demo system uses the <a href='https://github.com/covermymeds/api-jquery-plugins'>jQuery plugins</a> for CoverMyMeds PA requests, the dashboard, and for submitting and editing requests.</p>
+
+    <p>This system demonstrates 4 integration points:</p>
+    <ul>
+      <li>a prior authorization task list to show the PAs being worked upon.</li>
+      <li>starting a prior authorization within the electronic prescription workflow.</li>
+      <li>starting a new prior authorization outside e-Prescribing.</li>
+      <li>managing the PA workflow with request-pages</li>
+    </ul>
+    <a href="https://developers.covermymeds.com/ehr-api.html#quick-start" class="btn btn-primary btn-lg" role="button">
+      API Docs &raquo;
+    </a>
+    <h2>Start the Demonstration As...</h2>
+    <%= link_to "Dr. #{@demo_doctor.last_name}", demo_login_path(Role::DOCTOR), :id => 'btn_dr_login', :class => 'btn btn-success', :role=>'button'%>
+    <%= link_to "Staff", demo_login_path(Role::STAFF), :id => 'btn_staff_login', :class => 'btn btn-info', :role=>'button' %>
+</div>

@@ -1,0 +1,28 @@
+<div id="patient-show" class="template">
+  <h2><%= "#{@patient.description}" %></h2>
+  <%= link_to 'Edit Patient', edit_patient_path(@patient), :class=>"btn btn-md btn-primary" %>
+  <hr>
+  <h3>Prescriptions <div class='pull-right'><small>PA Requests: <%= @patient.pa_requests.count %></small></div></h3>
+
+  <% if @patient.prescriptions.empty? %>
+  <h5>No prescriptions have been added for this patient yet.</h5>
+  <%  else  %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Medication</th>
+          <th>PA Status</th>
+          <th colspan="2">Prescribed On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @patient.prescriptions.each do |prescription| %>
+          <%= render partial: 'prescription', locals: { prescription: prescription } %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <% if current_user && current_user.role == Role.doctor %>
+      <%= link_to "Add Prescription", new_patient_prescription_path(@patient), :class=>'btn btn-success' if current_user && current_user.role == Role.doctor %>
+    <% end %>
+  </div>

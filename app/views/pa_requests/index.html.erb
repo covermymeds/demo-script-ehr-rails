@@ -1,0 +1,10 @@
+<h2>Your Prior Auth Dashboard</h2>
+<% if @_use_custom_ui %>
+
+  <%= render partial: 'custom_dashboard', locals: { requests: @requests } %>
+
+<% else %>
+
+  <div id="dashboard" data-tokens="<%= @tokens.to_s %>"></div>
+
+<% end %>

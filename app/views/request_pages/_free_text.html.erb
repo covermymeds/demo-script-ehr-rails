@@ -1,0 +1,22 @@
+<div class="col-md-3">
+  <span> <label><%= question[:question_text] %></label> </span>
+</div>
+<div class="col-md-9 <%= require_if(question[:flag]) %> has-feedback">
+  <input type="text"
+  class="form-control <%= require_if(question[:flag]) %>"
+  name="<%= massage(question[:question_id], form_name) %>"
+  id='<%= question[:question_id] %>'
+  value="<%= data[question[:question_id].to_sym] %>"
+  <% question[:validations].each do |valid| %>
+    <%= render_validation(valid, @validations) %>
+  <% end %>
+  data-default-next-id="<%= massage(question[:default_next_question_id], form_name) %>"
+  <%= require_if(question[:flag]) %>
+  <%= render_coded_reference(question[:coded_reference]) %>
+  />
+  <span class="help-block"><%= question[:help_text] %></span>
+  <% question[:validations].each do |validation| %>
+    <span class="help-block"><%= @validations[validation][:message] %></span>
+  <% end %>
+</div>
+
